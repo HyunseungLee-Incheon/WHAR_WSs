@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tvDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="30dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_horizontal"
+        android:text="2019/11/01"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/color8A8A8A"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btYesterday"
+        android:layout_width="8dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="70dp"
+        android:background="@drawable/statistics_daily_leftarrow_button"
+        app:layout_constraintEnd_toStartOf="@+id/tvDay"
+        app:layout_constraintTop_toTopOf="@+id/tvDay"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/btTomorrow"
+        android:layout_width="8dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/statistics_daily_rightarrow_button"
+        app:layout_constraintStart_toEndOf="@+id/tvDay"
+        app:layout_constraintTop_toTopOf="@+id/tvDay"
+        android:visibility="gone"/>
+
+    <com.anychart.AnyChartView
+        android:id="@+id/acChartDay"
+        android:layout_width="0dp"
+        android:layout_height="180dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDay" >
+
+    </com.anychart.AnyChartView>
+
+    <ImageView
+        android:id="@+id/ivAfternoonAvr"
+        android:layout_width="74dp"
+        android:layout_height="98dp"
+        android:layout_marginTop="250dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDay"
+        app:srcCompat="@drawable/statistics_daily_pmavg_image" />
+
+
+    <ImageView
+        android:id="@+id/ivMorningAvr"
+        android:layout_width="74dp"
+        android:layout_height="98dp"
+        android:layout_marginEnd="34dp"
+        app:layout_constraintEnd_toStartOf="@+id/ivAfternoonAvr"
+        app:layout_constraintTop_toTopOf="@+id/ivAfternoonAvr"
+        app:srcCompat="@drawable/statistics_daily_amavg_image" />
+
+    <ImageView
+        android:id="@+id/ivDayAvr"
+        android:layout_width="74dp"
+        android:layout_height="98dp"
+        android:layout_marginStart="34dp"
+        app:layout_constraintStart_toEndOf="@+id/ivAfternoonAvr"
+        app:layout_constraintTop_toTopOf="@+id/ivAfternoonAvr"
+        app:srcCompat="@drawable/statistics_daily_dailyavg_image" />
+
+    <TextView
+        android:id="@+id/tvMorningBPM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:text="0"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivMorningAvr"
+        app:layout_constraintEnd_toEndOf="@+id/ivMorningAvr"
+        app:layout_constraintStart_toStartOf="@+id/ivMorningAvr" />
+
+    <TextView
+        android:id="@+id/tvAfternoonBPM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:text="0"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivAfternoonAvr"
+        app:layout_constraintEnd_toEndOf="@+id/ivAfternoonAvr"
+        app:layout_constraintStart_toStartOf="@+id/ivAfternoonAvr" />
+
+    <TextView
+        android:id="@+id/tvDayBPM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:text="0"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivDayAvr"
+        app:layout_constraintEnd_toEndOf="@+id/ivDayAvr"
+        app:layout_constraintStart_toStartOf="@+id/ivDayAvr" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
