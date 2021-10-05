@@ -1,0 +1,106 @@
+<resources>
+    <string name="app_name">HAR</string>
+
+    // Common
+    <string name="str_common_percentage">%</string>
+    <string name="str_common_exit_application">한번 더 클릭하면 앱이 종료됩니다.</string>
+    <string name="str_common_unknown">UNKNOWN</string>
+
+    // Splash
+    <string name="str_splash_welcome">WELCOME</string>
+
+    // Bluetooth
+    <string name="str_toast_turn_off_do_not_disturb">Please turn off Do Not Disturb mode.</string>
+    <string name="str_bluetooth_title">Bluetooth 기기 검색</string>
+    <string name="str_bluetooth_not_supported">Bluetooth not supported.</string>
+    <string name="str_bluetooth_unknown_characteristic">Unknown characteristic</string>
+    <string name="str_bluetooth_unknown_service">Unknown service</string>
+
+    // Main
+    <string name="str_main_title">Main</string>
+    <string name="str_main_list_heartbeat">심박</string>
+    <string name="str_main_list_pressure">압력</string>
+    <string name="str_main_list_rear">후방</string>
+    <string name="str_main_list_uv">UV</string>
+    <string name="str_main_list_gyro">GYRO</string>
+    <string name="str_main_list_temperature">온도</string>
+    <string name="str_main_list_statistic">통계</string>
+    <string name="str_main_list_setting">설정</string>
+
+    // Measure
+    <string name="str_measure_title">심박 측정</string>
+    <string name="str_measure_info">심박 측정 중입니다.\n잠시만 기다려 주십시오.\n정확한 결과값을 위해 말하거나 움직이지 마십시오.</string>
+    <string name="str_measure_result_info">정상 성인의 안정시 분당 심박수 평균은 60~80 bpm 입니다.\n이를 참고하여 평균 범위를 벗어났을 경우 가까운 병원을 방문하여\n정확한 검진을 받아보시길 권장합니다.</string>
+    <string name="str_measure_result_ex_info">현재의 상태를 입력하여 주십시오.\nEx) 안정, 피로, 운동</string>
+    <string name="str_measure_save_result">저장</string>
+    <string name="str_measure_preparing">PREPARING</string>
+
+    // Statistic
+    <string name="str_statistic_title">통계</string>
+    <string name="str_statistic_morning_avr">오전 평균</string>
+    <string name="str_statistic_afternoon_avr">오후 평균</string>
+    <string name="str_statistic_day_avr">일간 평균</string>
+    <string name="str_statistic_month">월간</string>
+    <string name="str_statistic_day">일간</string>
+    <string name="str_statistic_month_avr">월간 평균</string>
+    <string name="str_statistic_minimum">최저치</string>
+    <string name="str_statistic_maximum">최고치</string>
+    <string name="str_statistic_bpm">BPM</string>
+    <string name="str_statistic_temperature">Temperature</string>
+
+    <string name="str_statistic_HeartBeat_title">심박 통계</string>
+    <string name="str_statistic_Temperature_title">온도 통계</string>
+
+    // Battery
+    <string name="str_battery_title">배터리</string>
+
+    // Pressure
+    <string name="str_pressure_title">압력</string>
+
+    // Rear
+    <string name="str_rear_title">후방</string>
+
+    // Uv
+    <string name="str_uv_title_eng">UV Sensing</string>
+    <string name="str_uv_title">UV</string>
+    <string name="str_uv_current_uv">현재 자외선 지수</string>
+    <string name="str_uv_low">낮음</string>
+    <string name="str_uv_normal">보통</string>
+    <string name="str_uv_high">높음</string>
+    <string name="str_uv_very_high">매우 높음</string>
+    <string name="str_uv_dangerous">위험</string>
+
+    // Gyro
+    <string name="str_gyro_title">GYRO</string>
+
+    // Temperature
+    <string name="str_temperature_title_eng">Temperature</string>
+    <string name="str_temperature_title">온도</string>
+    <string name="str_temperature_current_temperature">현재 체온은</string>
+    <string name="str_main_default_temperature">\u00B0C</string>
+
+    // Setting
+    <string name="str_setting_title_eng">Settings</string>
+    <string name="str_setting_title">설정</string>
+    <string name="str_setting_pressure_call">Haptic-Pressure Call</string>
+    <string name="str_setting_gyro_call">Gyro-sensing Call</string>
+    <string name="str_setting_call_112">112에 신고</string>
+    <string name="str_setting_call_119">119에 신고</string>
+    <string name="str_setting_contact">전화번호 입력</string>
+    <string name="str_setting_112">112</string>
+    <string name="str_setting_119">119</string>
+
+    <string name="str_setting_emergency_call">Emergency Call</string>
+
+    // FineDust
+    <string name="str_finedust_title_eng">Fine Dust</string>
+    <string name="str_finedust_title">미세 먼지</string>
+
+    // FineDust
+    <string name="str_gas_title_eng">GAS</string>
+    <string name="str_gas_title">가스</string>
+
+    // Loading
+    <string name="str_loading_text">Loading..</string>
+    <string name="str_loading_result_text">Calculating..</string>
+</resources>
