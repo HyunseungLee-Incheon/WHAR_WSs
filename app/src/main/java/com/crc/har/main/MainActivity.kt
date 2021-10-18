@@ -19,6 +19,7 @@ import com.crc.har.base.CommonUtils
 import com.crc.har.base.Constants
 import com.crc.har.R
 import com.crc.har.gyro.GyroActivity
+import com.crc.har.measure.HeartBeatMeasureActivity
 import com.crc.har.pressure.PressureActivity
 import com.crc.har.setting.SettingActivity
 import com.crc.har.statistics.StatisticSelActivity
@@ -123,13 +124,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         Log.e("eleutheria", "position : " + position)
         when(position) {
             0 -> { // heartbeat
-                Constants.nCurFunctionIndex = Constants.MAIN_FUNCTION_INDEX_HB
-                val intent = Intent(this, LoadingClassicActivity::class.java)
-                intent.putExtra(Constants.SELECT_FUNCTION_INDEX, Constants.MAIN_FUNCTION_INDEX_HB)
-                startActivity(intent)
-
-//                val intent = Intent(this, HeartBeatMeasureActivity::class.java)
+//                Constants.nCurFunctionIndex = Constants.MAIN_FUNCTION_INDEX_HB
+//                val intent = Intent(this, LoadingClassicActivity::class.java)
+//                intent.putExtra(Constants.SELECT_FUNCTION_INDEX, Constants.MAIN_FUNCTION_INDEX_HB)
 //                startActivity(intent)
+
+                val intent = Intent(this, HeartBeatMeasureActivity::class.java)
+                startActivity(intent)
             }
             1 -> { // pressure
                 Constants.nCurFunctionIndex = Constants.MAIN_FUNCTION_INDEX_PRESSURE

@@ -71,9 +71,9 @@
         android:id="@+id/tv_temperature_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="25dp"
         android:text="@string/str_main_default_temperature"
-        android:textSize="40sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="@+id/iv_temperature_bg"
         app:layout_constraintEnd_toEndOf="@+id/iv_temperature_bg"
         app:layout_constraintStart_toStartOf="@+id/iv_temperature_bg" />

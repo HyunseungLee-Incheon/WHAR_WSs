@@ -122,7 +122,6 @@ class GyroActivity : AppCompatActivity(), View.OnClickListener {
                 onBackPressed()
             }
             R.id.iv_gyro_ready -> {
-                LoadingActivity.mBluetoothLeService.readCharacteristic()
                 alertByGyro()
 //                sendSMS()
 //                sendCall()
