@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
+import android.os.SystemClock.sleep
 import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.crc.har.base.Constants
@@ -159,11 +160,51 @@ class BluetoothLeService: Service() {
                     sendMessageToActivity(subData)
                 }
                 Constants.MAIN_FUNCTION_INDEX_GYRO -> {
-                    val subData = strReceiveData.substring(1, 2)
-                    Log.d("eleutheria", String.format("Received Gyro : ${subData}"))
-
-                    if(subData == Constants.ACTION_GYRO_SIGNAL) {
-                        sendMessageToActivity(subData)
+                    val arData = strReceiveData.split("!/")
+                    Log.e("eleutheria", "arData.size : ${arData.size}")
+                    var strHBValue = ""
+                    if (arData.size >= 1) {
+                        Log.e("eleutheria", "arData[0] : ${arData[0]}")
+                        val arRawData = arData[0].split(":")
+                        Log.e("eleutheria", "arRawData[0] : ${arRawData[0]}")
+                        if (arRawData[0].contains("G")) {
+                            Log.e("eleutheria", "G arRawData[1] : ${arRawData[1]}")
+                            if (arRawData[1].equals(Constants.ACTION_GYRO_SIGNAL)) {
+                                sendMessageToActivity(arRawData[1])
+                            }
+                        } else if (arRawData[0].contains("T")) {
+                            Log.e("eleutheria", "T arRawData[1] : ${arRawData[1]}")
+                            if (arRawData[1].equals(Constants.ACTION_REAR_SIGNAL)) {
+                                sendMessageToActivity(arRawData[1])
+                            }
+                        }
+                    }
+//                    val subData = strReceiveData.substring(1, 2)
+//                    Log.d("eleutheria", String.format("Received Gyro : ${subData}"))
+//
+//                    if(subData == Constants.ACTION_GYRO_SIGNAL) {
+//                        sendMessageToActivity(subData)
+//                    }
+                }
+                Constants.MAIN_FUNCTION_INDEX_REAR -> {
+                    val arData = strReceiveData.split("!/")
+//                    Log.e("eleutheria", "arData.size : ${arData.size}")
+                    var strHBValue = ""
+                    if (arData.size >= 1) {
+                        Log.e("eleutheria", "arData[0] : ${arData[0]}")
+                        val arRawData = arData[0].split(":")
+                        Log.e("eleutheria", "arRawData[0] : ${arRawData[0]}")
+                        if (arRawData[0].contains("G")) {
+                            Log.e("eleutheria", "G arRawData[1] : ${arRawData[1]}")
+                            if (arRawData[1].equals(Constants.ACTION_GYRO_SIGNAL)) {
+                                sendMessageToActivity(arRawData[1])
+                            }
+                        } else if (arRawData[0].contains("T")) {
+                            Log.e("eleutheria", "T arRawData[1] : ${arRawData[1]}")
+                            if (arRawData[1].equals(Constants.ACTION_REAR_SIGNAL)) {
+                                sendMessageToActivity(arRawData[1])
+                            }
+                        }
                     }
                 }
                 Constants.MAIN_FUNCTION_INDEX_TEMPERATURE -> {
@@ -350,13 +391,16 @@ class BluetoothLeService: Service() {
         }
         mBluetoothGatt!!.setCharacteristicNotification(characteristic, enabled)
 
-//        // This is specific to Heart Rate Measurement.
-//        if (UUID_HEART_RATE_MEASUREMENT == characteristic.uuid) {
-//            val descriptor = characteristic.getDescriptor(
-//                UUID.fromString(SampleGattAttributes.CLIENT_CHARACTERISTIC_CONFIG))
-//            descriptor.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
-//            mBluetoothGatt!!.writeDescriptor(descriptor)
-//        }
+        // This is specific to Heart Rate Measurement.
+        if (UUID_GYRO_MEASUREMENT == characteristic.uuid) {
+            Log.e("eleutheria", "strart")
+            sleep(3000)
+            Log.e("eleutheria", "end")
+            val descriptor = characteristic.getDescriptor(
+                UUID.fromString(SampleGattAttributes.CLIENT_CHARACTERISTIC_CONFIG))
+            descriptor.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
+            mBluetoothGatt!!.writeDescriptor(descriptor)
+        }
     }
 
     fun setMCNotification(enabled: Boolean) {
@@ -376,6 +420,10 @@ class BluetoothLeService: Service() {
             Constants.MAIN_FUNCTION_INDEX_GYRO -> {
                 uuidMCCharateristic = SampleGattAttributes.CHARACTERISTIC_GYRO_MEASUREMENT
                 uuidMCService = SampleGattAttributes.SERVICE_GYRO_MEASUREMENT
+            }
+            Constants.MAIN_FUNCTION_INDEX_REAR -> {
+                uuidMCCharateristic = SampleGattAttributes.CHARACTERISTIC_REAR_MEASUREMENT
+                uuidMCService = SampleGattAttributes.SERVICE_REAR_MEASUREMENT
             }
             Constants.MAIN_FUNCTION_INDEX_TEMPERATURE -> {
                 uuidMCCharateristic = SampleGattAttributes.CHARACTERISTIC_TEMPERATURE_MEASUREMENT
@@ -416,6 +464,9 @@ class BluetoothLeService: Service() {
             Constants.MAIN_FUNCTION_INDEX_GYRO -> {
                 strActionName = Constants.MESSAGE_SEND_GYRO
             }
+            Constants.MAIN_FUNCTION_INDEX_REAR -> {
+                strActionName = Constants.MESSAGE_SEND_GYRO
+            }
             Constants.MAIN_FUNCTION_INDEX_TEMPERATURE -> {
                 strActionName = Constants.MESSAGE_SEND_TEMPERATURE
             }
@@ -453,5 +504,6 @@ class BluetoothLeService: Service() {
         val ACTION_DATA_AVAILABLE = "com.example.bluetooth.le.ACTION_DATA_AVAILABLE"
         val EXTRA_DATA = "com.example.bluetooth.le.EXTRA_DATA"
 
+        val UUID_GYRO_MEASUREMENT = UUID.fromString(SampleGattAttributes.SERVICE_GYRO_MEASUREMENT)
     }
 }

@@ -45,7 +45,7 @@ class HeartBeatResultActivity : AppCompatActivity(), View.OnClickListener {
         tvResultHB = findViewById<TextView>(R.id.tvResultHB)
 
         var avgHeartBeat = Constants.nAvgHeartBeat
-        avgHeartBeat = 69
+//        avgHeartBeat = 69
 
         setResultHB(avgHeartBeat)
 
@@ -113,13 +113,15 @@ class HeartBeatResultActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onBackPressed() {
         val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_NEW_TASK)
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }
 
     private fun finishResult() {
         val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_NEW_TASK)
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }
 }

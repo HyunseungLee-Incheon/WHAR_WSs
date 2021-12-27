@@ -27,8 +27,7 @@ import com.crc.har.pressure.PressureActivity
 import com.crc.har.temperature.TemperatureActivity
 import java.util.ArrayList
 
-class LoadingActivity : AppCompatActivity(), View.OnClickListener {
-
+class LoadingMultiActivity : AppCompatActivity(), View.OnClickListener  {
     private var mBluetoothAdapter: BluetoothAdapter? = null
     private var mScanning: Boolean = false
     private var mHandler: Handler? = null
@@ -182,18 +181,6 @@ class LoadingActivity : AppCompatActivity(), View.OnClickListener {
             Log.e("eleutheria", "address : ${strDeviceAddress}")
 
             when(nFunctionIndex) {
-                Constants.MAIN_FUNCTION_INDEX_HB -> {
-                    if(strDeviceAddress == Constants.MODULE_ADDRESS_HB) {
-                        Log.e("eleutheria", "find device HeartBeat")
-                        mBluetoothLeService!!.connect(strDeviceAddress)
-                    }
-                }
-                Constants.MAIN_FUNCTION_INDEX_PRESSURE -> {
-                    if(strDeviceAddress.equals(Constants.MODULE_ADDRESS_PRESSURE)) {
-                        Log.e("eleutheria", "find device Pressure")
-                        mBluetoothLeService!!.connect(strDeviceAddress)
-                    }
-                }
                 Constants.MAIN_FUNCTION_INDEX_GYRO -> {
                     if(strDeviceAddress == Constants.MODULE_ADDRESS_GYRO) {
                         Log.e("eleutheria", "find device GYRO")
@@ -261,11 +248,10 @@ class LoadingActivity : AppCompatActivity(), View.OnClickListener {
                 addGattServices(mBluetoothLeService!!.supportedGattServices)
                 activeNotification()
                 Log.d("eleutheria", "ACTION_GATT_SERVICES_DISCOVERED")
-//                moveMainActivity()
-                moveNextLoading()
+                moveMainActivity()
             } else if (BluetoothLeService.ACTION_DATA_AVAILABLE == action) {
                 parsingData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA))
-                Log.d("eleutheria", "ACTION_DATA_A VAILABLE")
+                Log.d("eleutheria", "ACTION_DATA_AVAILABLE")
             }
         }
     }
@@ -351,41 +337,19 @@ class LoadingActivity : AppCompatActivity(), View.OnClickListener {
     private fun moveMainActivity() {
 
         when(nFunctionIndex) {
-            Constants.MAIN_FUNCTION_INDEX_HB -> {
-                val intent = Intent(this, HeartBeatMeasureActivity::class.java)
-                startActivity(intent)
-            }
-            Constants.MAIN_FUNCTION_INDEX_PRESSURE -> {
-                val intent = Intent(this, PressureActivity::class.java)
-                startActivity(intent)
-            }
             Constants.MAIN_FUNCTION_INDEX_GYRO -> {
                 val intent = Intent(this, GyroActivity::class.java)
                 startActivity(intent)
             }
-            Constants.MAIN_FUNCTION_INDEX_TEMPERATURE -> {
-                val intent = Intent(this, TemperatureActivity::class.java)
+            Constants.MAIN_FUNCTION_INDEX_REAR -> {
+                val intent = Intent(this, GyroActivity::class.java)
                 startActivity(intent)
             }
         }
     }
 
-    private fun moveNextLoading() {
-
-//        Constants.nCurFunctionIndex = Constants.MAIN_FUNCTION_INDEX_GYRO
-//        val intent = Intent(this, LoadingMultiActivity::class.java)
-//        intent.putExtra(Constants.SELECT_FUNCTION_INDEX, Constants.MAIN_FUNCTION_INDEX_GYRO)
-//        startActivity(intent)
-
-        Constants.nCurFunctionIndex = Constants.MAIN_FUNCTION_INDEX_REAR
-        val intent = Intent(this, LoadingMultiActivity::class.java)
-        intent.putExtra(Constants.SELECT_FUNCTION_INDEX, Constants.MAIN_FUNCTION_INDEX_REAR)
-        startActivity(intent)
-
-    }
-
     companion object {
-        private val TAG = LoadingActivity::class.java!!.getSimpleName()
+        private val TAG = LoadingMultiActivity::class.java!!.getSimpleName()
 
 
         var mBluetoothLeService: BluetoothLeService? = null
@@ -399,5 +363,4 @@ class LoadingActivity : AppCompatActivity(), View.OnClickListener {
             return intentFilter
         }
     }
-
 }

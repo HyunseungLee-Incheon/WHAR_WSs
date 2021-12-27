@@ -6,6 +6,8 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import android.telephony.SmsManager
 import android.util.Log
 import android.view.View
@@ -21,8 +23,10 @@ import java.util.*
 
 class PressureActivity : AppCompatActivity(), View.OnClickListener {
 
+    val handler: Handler = Handler1()
     private val mAlertTimer by lazy { Timer() }
     var isAlertOn = false
+    var isEmergency = false
 
     lateinit var iv_alert: ImageView
     var strReceiveData : String = ""
@@ -45,25 +49,34 @@ class PressureActivity : AppCompatActivity(), View.OnClickListener {
         iv_alert.setImageResource(R.drawable.haptic_pressure_siren_image1)
     }
 
-    fun aletByPressure() {
+    private fun aletByPressure() {
         val task = object : TimerTask() {
             override fun run() {
 
-                if(isAlertOn) {
-                    iv_alert.setImageResource(R.drawable.haptic_pressure_siren_image1)
-
-                    isAlertOn = false
-                } else {
-                    iv_alert.setImageResource(R.drawable.haptic_pressure_siren_image2)
-
-                    isAlertOn = true
-                }
+                isEmergency = true
+//                Log.e("eleutheria", "aletByPressure")
+                val msg = handler.obtainMessage()
+                handler.sendMessage(msg)
 
             }
 
         }
-        mAlertTimer.schedule(task, 0,1000)
+        mAlertTimer.schedule(task, 1000,1000)
 
+    }
+
+    inner class Handler1 : Handler() {
+        override fun handleMessage(msg: Message) = if(isAlertOn) {
+            iv_alert.setImageResource(R.drawable.haptic_pressure_siren_image1)
+
+//            Log.e("eleutheria", "isAlertOn : On")
+            isAlertOn = false
+        } else {
+            iv_alert.setImageResource(R.drawable.haptic_pressure_siren_image2)
+
+//            Log.e("eleutheria", "isAlertOn : Off")
+            isAlertOn = true
+        }
     }
 
     override fun onResume() {
@@ -87,7 +100,7 @@ class PressureActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onBackPressed() {
         val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }
 
@@ -119,27 +132,50 @@ class PressureActivity : AppCompatActivity(), View.OnClickListener {
                 val message = intent!!.getStringExtra("value")
 //                Log.e("eleutheria", "message : $message")
 
-                if(message == ".") {
-//                    Log.e("eleutheria", "strReceiveData : $strReceiveData")
-                    var arData = strReceiveData.split("\r\n")
+                if (message != null) {
+                    if (message.contains("\n")) {
+//                        HB:83!/BT:23.68!/
+                        strReceiveData += message
+                        if(strReceiveData.contains("P")) {
+                            Log.e("eleutheria", "pressure alert")
 
-                    for(data in arData) {
-                        if(data.contains("P")) {
-                            Log.e("eleutheria", "data : $data")
-
-                            if(data == "P1" || data == ".P1") {
-                                Log.e("eleutheria", "pressure alert")
+                            if(!isEmergency) {
                                 aletByPressure()
 //                                Log.e("eleutheria", "strPhoneNumber : ${Constants.strHapticNumber}")
-//                                sendSMS()
-//                                sendCall()
+                                sendSMS()
+                                sendCall()
                             }
                         }
+                        strReceiveData = ""
+                    } else {
+                        strReceiveData += message
                     }
-                    strReceiveData = ""
-                } else {
-                    strReceiveData += message
                 }
+
+
+//                if(message == ".") {
+////                    Log.e("eleutheria", "strReceiveData : $strReceiveData")
+//                    var arData = strReceiveData.split("\r\n")
+//
+//                    for(data in arData) {
+//                        if(data.contains("P")) {
+//                            Log.e("eleutheria", "data : $data")
+//
+//                            if(data == "P1" || data == ".P1") {
+//                                Log.e("eleutheria", "pressure alert")
+//                                aletByPressure()
+////                                Log.e("eleutheria", "strPhoneNumber : ${Constants.strHapticNumber}")
+////                                sendSMS()
+////                                sendCall()
+//                            }
+//                        }
+//                    }
+//                    strReceiveData = ""
+//                } else {
+//                    strReceiveData += message
+//                }
+
+
             }
         }
     }

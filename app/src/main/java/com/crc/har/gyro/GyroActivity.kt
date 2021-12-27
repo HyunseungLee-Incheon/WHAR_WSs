@@ -131,7 +131,8 @@ class GyroActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onBackPressed() {
         val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_NEW_TASK)
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }
 
@@ -139,13 +140,14 @@ class GyroActivity : AppCompatActivity(), View.OnClickListener {
         override fun onReceive(context: Context?, intent: Intent?) {
             if(intent!!.hasExtra("value")) {
                 val message = intent.getStringExtra("value")
+                Log.e("eleutheria", "message : $message")
                 if(message.equals("1")) {
                     if(!bWarning) {
                         Log.e("eleutheria", "warning : $bWarning")
                         bWarning = true
                         alertByGyro()
-//                        sendSMS()
-//                        sendCall()
+                        sendSMS()
+                        sendCall()
                     }
                 }
             }

@@ -124,13 +124,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         Log.e("eleutheria", "position : " + position)
         when(position) {
             0 -> { // heartbeat
-//                Constants.nCurFunctionIndex = Constants.MAIN_FUNCTION_INDEX_HB
-//                val intent = Intent(this, LoadingClassicActivity::class.java)
-//                intent.putExtra(Constants.SELECT_FUNCTION_INDEX, Constants.MAIN_FUNCTION_INDEX_HB)
-//                startActivity(intent)
-
-                val intent = Intent(this, HeartBeatMeasureActivity::class.java)
+                Constants.nCurFunctionIndex = Constants.MAIN_FUNCTION_INDEX_HB
+                val intent = Intent(this, LoadingClassicActivity::class.java)
+                intent.putExtra(Constants.SELECT_FUNCTION_INDEX, Constants.MAIN_FUNCTION_INDEX_HB)
                 startActivity(intent)
+
+//                val intent = Intent(this, HeartBeatMeasureActivity::class.java)
+//                startActivity(intent)
             }
             1 -> { // pressure
                 Constants.nCurFunctionIndex = Constants.MAIN_FUNCTION_INDEX_PRESSURE
@@ -147,12 +147,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
                 intent.putExtra(Constants.SELECT_FUNCTION_INDEX, Constants.MAIN_FUNCTION_INDEX_GYRO)
                 startActivity(intent)
 
+//                Constants.nCurFunctionIndex = Constants.MAIN_FUNCTION_INDEX_REAR
+//                val intent = Intent(this, LoadingActivity::class.java)
+//                intent.putExtra(Constants.SELECT_FUNCTION_INDEX, Constants.MAIN_FUNCTION_INDEX_REAR)
+//                startActivity(intent)
+
 //                val intent = Intent(this, GyroActivity::class.java)
 //                startActivity(intent)
             }
             3 -> { // temperature
                 Constants.nCurFunctionIndex = Constants.MAIN_FUNCTION_INDEX_TEMPERATURE
                 val intent = Intent(this, LoadingClassicActivity::class.java)
+//                val intent = Intent(this, LoadingSerialActivity::class.java)
                 intent.putExtra(Constants.SELECT_FUNCTION_INDEX, Constants.MAIN_FUNCTION_INDEX_TEMPERATURE)
                 startActivity(intent)
 
