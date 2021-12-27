@@ -1,5 +1,7 @@
 package com.crc.har.base
 
+import com.crc.har.BuildConfig
+
 class Constants {
     companion object {
         var strDeviceName = "Not Connected"
@@ -48,6 +50,7 @@ class Constants {
         val MAIN_FUNCTION_INDEX_STATISTICS              = 7
         val MAIN_FUNCTION_INDEX_SETTING                 = 8
         val MAIN_FUNCTION_INDEX_HB_RESULT               = 9
+        val MAIN_FUNCTION_INDEX_REAR                    = 10
 
         val RECIEVE_DATA_PREFIX_TEMPERATURE                     = "TE"
 
@@ -69,13 +72,16 @@ class Constants {
         val MESSAGE_SEND_TEMPERATURE                    = "TemperatureMessage"
 
         val ACTION_GYRO_SIGNAL                          = "1"
+        val ACTION_REAR_SIGNAL                          = "1"
 
         // Address
         val MODULE_ADDRESS_HB                             = "98:D3:91:FD:5E:40"
         val MODULE_ADDRESS_PRESSURE                       = "98:D3:91:FD:5E:40"
         val MODULE_ADDRESS_GYRO                           = "4D:B1:2D:AB:1F:31"
         val MODULE_ADDRESS_REAR                           = "9E:C7:89:92:46:5F"
-        val MODULE_ADDRESS_TEMPERATURE                    = "9E:D3:91:FD:5E:40"
+        val MODULE_ADDRESS_TEMPERATURE                    = "98:D3:91:FD:5E:40"
+//        val MODULE_ADDRESS_TEMPERATURE                    = "20:19:09:06:45:34"
+        val MODULE_ADDRESS_HC06                             = "98:D3:91:FD:5E:40"
 
         // Service UUID
         val MODULE_SERVICE_UUID_HB                              = "6E400001-B5A3-F393-E0A9-E50E24DCCA9F"
@@ -91,5 +97,14 @@ class Constants {
         val MODULE_CHARACTERISTIC_UUID_GYRO                     = "00002902-0000-1000-8000-00805f9b34fb"
         val MODULE_CHARACTERISTIC_UUID_REAR                     = "00002902-0000-1000-8000-00805f9b34fb"
         val MODULE_CHARACTERISTIC_UUID_TEMPERATURE              = "6E400003-B5A3-F393-E0A9-E50E24DCCA9D"
+
+        // values have to be globally unique
+        val INTENT_ACTION_DISCONNECT: String = BuildConfig.APPLICATION_ID.toString() + ".Disconnect"
+        val NOTIFICATION_CHANNEL: String = BuildConfig.APPLICATION_ID.toString() + ".Channel"
+        val INTENT_CLASS_MAIN_ACTIVITY: String =
+            BuildConfig.APPLICATION_ID.toString() + ".MainActivity"
+
+        // values have to be unique within each app
+        const val NOTIFY_MANAGER_START_FOREGROUND_SERVICE = 1001
     }
 }

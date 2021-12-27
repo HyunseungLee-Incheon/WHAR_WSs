@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -12,10 +13,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.crc.har.R
-import com.crc.har.base.CommonUtils
-import com.crc.har.base.Constants
-import com.crc.har.base.CurrentDate
-import com.crc.har.base.TemperatureData
+import com.crc.har.base.*
 import com.crc.har.database.DBTemperatureModel
 import com.crc.har.main.MainActivity
 import io.realm.Realm
@@ -95,7 +93,8 @@ class TemperatureActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onBackPressed() {
         val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_NEW_TASK)
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }
 
@@ -112,12 +111,40 @@ class TemperatureActivity : AppCompatActivity(), View.OnClickListener {
                 val message = intent.getStringExtra("value")
 
                 if (message != null) {
-                    saveTemperature(message.toInt())
-                }
-                if (message != null) {
-                    displayTemperature(message.toInt())
-                }
+                    if(message.contains("\n")) {
+//                        HB:83!/BT:23.68!/
+                        strReceiveData += message
+//                        Log.e("eleutheria", "new line msg : " + message + "strData : " + strReceiveData)
+                        if(!strReceiveData.contains("P")) {
+                            val arData = strReceiveData.split("!/")
+                            var strTempValue = ""
+//                        Log.e("eleutheria", "arData.size : " + arData.size)
+                            if (arData.size >= 2) {
+                                if (arData[1].contains("BT")) {
+                                    val arBTData = arData[1].split(":")
+                                    if (arBTData.size > 1) {
+                                        val arSecondBTData = arBTData[1].split(".")
+                                        strTempValue = arSecondBTData[0]
+//                                strTempValue = strTempValue + "." + arData[3]
+//                                    Log.e("eleutheria", "strTempValue : " + strTempValue)
+                                    }
+                                }
+                                strReceiveData = ""
+                                saveTemperature(strTempValue.toInt())
+                                displayTemperature(strTempValue.toInt())
+                            } else {
+                                strReceiveData = ""
+                            }
+                        } else {
+                            strReceiveData = ""
+                        }
 
+                    }
+                    else {
+                        strReceiveData += message
+//                        Log.e("eleutheria", "line msg : " + message)
+                    }
+                }
             }
         }
 

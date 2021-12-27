@@ -5,10 +5,14 @@
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
+
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required="false"/>
 
     <application
         android:name="com.crc.har.base.MyApplication"
@@ -49,6 +53,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.crc.har.main.MainActivity" />
         </activity>
+        <activity android:name="com.crc.har.main.LoadingMultiActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.crc.har.main.MainActivity" />
+        </activity>
+        <activity android:name="com.crc.har.main.LoadingSerialActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.crc.har.main.MainActivity" />
+        </activity>
         <activity android:name="com.crc.har.pressure.PressureActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -84,6 +98,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.crc.har.statistics.StatisticSelActivity" />
         </activity>
+<!--        <service android:name="com.crc.har.bluetooth.SerialService" />-->
         <service android:name="com.crc.har.bluetooth.BluetoothLeService" android:enabled="true"/>
     </application>
 

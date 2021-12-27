@@ -11,6 +11,10 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import java.util.*
+import android.os.Build
+import java.lang.Exception
+import java.lang.reflect.Method
+
 
 class BluetoothClassicManager {
     companion object {
@@ -417,7 +421,8 @@ class BluetoothClassicManager {
             // Get a BluetoothSocket for a connection with the
             // given BluetoothDevice
             try {
-                tmp = mmDevice.createRfcommSocketToServiceRecord(MY_UUID)
+//                tmp = mmDevice.createRfcommSocketToServiceRecord(MY_UUID)
+                tmp = createBluetoothSocket(mmDevice)
             } catch (e: IOException) {
                 Log.e(TAG, "create() failed", e)
             }
@@ -425,6 +430,22 @@ class BluetoothClassicManager {
             mmSocket = tmp
         }
 
+        @Throws(IOException::class)
+        private fun createBluetoothSocket(device: BluetoothDevice): BluetoothSocket {
+            if (Build.VERSION.SDK_INT >= 10) {
+                try {
+                    val m: Method = device.javaClass.getMethod(
+                        "createInsecureRfcommSocketToServiceRecord", *arrayOf<Class<*>>(
+                            UUID::class.java
+                        )
+                    )
+                    return m.invoke(device, MY_UUID) as BluetoothSocket
+                } catch (e: Exception) {
+                    Log.e(TAG, "Could not create Insecure RFComm Connection", e)
+                }
+            }
+            return device.createRfcommSocketToServiceRecord(MY_UUID)
+        }
         override fun run() {
             Log.i(TAG, "BEGIN mConnectThread")
             name = "ConnectThread"
@@ -438,6 +459,7 @@ class BluetoothClassicManager {
                 // successful connection or an exception
                 mmSocket!!.connect()
             } catch (e: IOException) {
+                Log.e(TAG, "connectionFailed", e)
                 connectionFailed()
                 // Close the socket
                 try {

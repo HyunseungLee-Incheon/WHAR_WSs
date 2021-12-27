@@ -12,6 +12,7 @@ object SampleGattAttributes {
     var SERVICE_HEART_BEAT_MEASUREMENT                              = Constants.MODULE_SERVICE_UUID_HB
     var SERVICE_PRESSURE_MEASUREMENT                                = Constants.MODULE_SERVICE_UUID_PRESSURE
     var SERVICE_GYRO_MEASUREMENT                                    = Constants.MODULE_SERVICE_UUID_GYRO
+    var SERVICE_REAR_MEASUREMENT                                    = Constants.MODULE_SERVICE_UUID_REAR
     var SERVICE_TEMPERATURE_MEASUREMENT                             = Constants.MODULE_SERVICE_UUID_TEMPERATURE
 
 
@@ -20,6 +21,7 @@ object SampleGattAttributes {
     var CHARACTERISTIC_HEART_BEAT_MEASUREMENT                         = Constants.MODULE_CHARACTERISTIC_UUID_HB
     var CHARACTERISTIC_PRESSURE_MEASUREMENT                           = Constants.MODULE_CHARACTERISTIC_UUID_PRESSURE
     var CHARACTERISTIC_GYRO_MEASUREMENT                               = Constants.MODULE_CHARACTERISTIC_UUID_GYRO
+    var CHARACTERISTIC_REAR_MEASUREMENT                               = Constants.MODULE_CHARACTERISTIC_UUID_REAR
     var CHARACTERISTIC_TEMPERATURE_MEASUREMENT                        = Constants.MODULE_CHARACTERISTIC_UUID_TEMPERATURE
 
 
@@ -36,6 +38,7 @@ object SampleGattAttributes {
         attributes.put(SERVICE_HEART_BEAT_MEASUREMENT, "Heart Rate Measurement")
         attributes.put(SERVICE_PRESSURE_MEASUREMENT, "Pressure Measurement")
         attributes.put(SERVICE_GYRO_MEASUREMENT, "GYRO Measurement")
+        attributes.put(SERVICE_REAR_MEASUREMENT, "REAR Measurement")
         attributes.put(SERVICE_TEMPERATURE_MEASUREMENT, "Temperature Measurement")
     }
 

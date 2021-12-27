@@ -86,7 +86,8 @@ class LoadingClassicActivity : AppCompatActivity(), View.OnClickListener  {
 
     override fun onBackPressed() {
         val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_NEW_TASK)
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }
 
@@ -186,14 +187,18 @@ class LoadingClassicActivity : AppCompatActivity(), View.OnClickListener  {
                     Constants.MAIN_FUNCTION_INDEX_HB -> {
                         if(strDeviceAddress.equals(Constants.MODULE_ADDRESS_HB)) {
                             Log.e("eleutheria", "find device HeartBeat")
-                            mBluetoothClassicManager.connect(Constants.strDeviceAddress)
+                            if(mBluetoothClassicManager.state != 2 ) {
+                                mBluetoothClassicManager.connect(Constants.strDeviceAddress)
+                            }
 //                            moveMainActivity()
                         }
                     }
                     Constants.MAIN_FUNCTION_INDEX_PRESSURE -> {
                         if(strDeviceAddress.equals(Constants.MODULE_ADDRESS_PRESSURE)) {
-                            Log.e("eleutheria", "find device Pressure")
-                            mBluetoothClassicManager.connect(Constants.strDeviceAddress)
+                            Log.e("eleutheria", "find device Pressure : ${mBluetoothClassicManager.state}")
+                            if(mBluetoothClassicManager.state != 2 ) {
+                                mBluetoothClassicManager.connect(Constants.strDeviceAddress)
+                            }
 //                            moveMainActivity()
                         }
                     }
@@ -206,8 +211,10 @@ class LoadingClassicActivity : AppCompatActivity(), View.OnClickListener  {
                     }
                     Constants.MAIN_FUNCTION_INDEX_TEMPERATURE -> {
                         if(strDeviceAddress.equals(Constants.MODULE_ADDRESS_TEMPERATURE)) {
-                            Log.e("eleutheria", "find device Temperature")
-                            mBluetoothClassicManager.connect(Constants.strDeviceAddress)
+                            Log.e("eleutheria", "find device Temperature, " + mBluetoothClassicManager.state)
+                            if(mBluetoothClassicManager.state != 2 ) {
+                                mBluetoothClassicManager.connect(Constants.strDeviceAddress)
+                            }
 //                            moveMainActivity()
                         }
                     }

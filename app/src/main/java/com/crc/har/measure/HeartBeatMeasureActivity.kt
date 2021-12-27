@@ -65,7 +65,8 @@ class HeartBeatMeasureActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onBackPressed() {
         val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_NEW_TASK)
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }
 
@@ -82,10 +83,10 @@ class HeartBeatMeasureActivity : AppCompatActivity(), View.OnClickListener {
             time++
 
             // data measure
-            if(!Constants.bIsStartMeasure && !bIsFinish && time >= 2) {
+            if(!Constants.bIsStartMeasure && !bIsFinish && time >= 20) {
                 Constants.bIsStartMeasure = true
             }
-            if(Constants.bIsStartMeasure && !bIsFinish && time >= 5) {
+            if(Constants.bIsStartMeasure && !bIsFinish && time >= 50) {
                 Constants.bIsStartMeasure = false
                 bIsFinish = true
                 timerMeasureTask?.cancel()
@@ -93,7 +94,7 @@ class HeartBeatMeasureActivity : AppCompatActivity(), View.OnClickListener {
             }
 //            Log.e("eleutheria", "time : ${time}")
             runOnUiThread {
-                tvLoading?.text = "${time * 10} ${getString(R.string.str_common_percentage)}"
+                tvLoading?.text = "${time * 2} ${getString(R.string.str_common_percentage)}"
             }
         }
 
@@ -106,7 +107,8 @@ class HeartBeatMeasureActivity : AppCompatActivity(), View.OnClickListener {
 
         val intent = Intent(this, HeartBeatResultActivity::class.java)
         intent.putExtra(Constants.HB_MEASUREMENT_DATA, avgHeartBeat)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_NEW_TASK)
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
 
 //        startActivity<LoadingResultActivity>()
@@ -123,6 +125,7 @@ class HeartBeatMeasureActivity : AppCompatActivity(), View.OnClickListener {
 
         for(heartBeat in measuredHeartBeat) {
             sumHeartBeat += heartBeat.toInt()
+            Log.e("eleutheria", "sumHeartBeat : " + sumHeartBeat + ", heartBeat.toInt() : " + heartBeat.toInt())
         }
 
         var avgHeartBeat : Long = 0
@@ -137,17 +140,47 @@ class HeartBeatMeasureActivity : AppCompatActivity(), View.OnClickListener {
         override fun onReceive(context: Context?, intent: Intent?) {
             if(intent!!.hasExtra("value")) {
                 val message = intent.getStringExtra("value")
-                Log.e("eleutheria", "message : $message")
+//                Log.e("eleutheria", "message : $message")
 
                 if(Constants.bIsStartMeasure && !bIsFinish) {
                     Log.e("eleutheria", "HB : $message")
+//                    if (message != null) {
+//                        if(message.toInt() > 0) {
+//                            arHBData.add(message)
+//                        }
+//                    }
                     if (message != null) {
-                        if(message.toInt() > 0) {
-                            arHBData.add(message)
+                        if(message.contains("\n")) {
+                            strReceiveData += message
+//                          HB:83!/BT:23.68!/
+//                        Log.e("eleutheria", "new line msg : " + message)
+                            if(!strReceiveData.contains("P")) {
+                                val arData = strReceiveData.split("!/")
+                                var strHBValue = ""
+                                if (arData.size >= 2) {
+                                    val arRawData = arData[0].split(":")
+                                    if (arRawData[0].contains("HB")) {
+                                        strHBValue = arRawData[1]
+//                                strTempValue = strTempValue + "." + arData[3]
+                                        Log.e("eleutheria", "strHBValue : " + strHBValue)
+                                        if (strHBValue.toInt() > 0) {
+                                            arHBData.add(strHBValue)
+                                        }
+                                    }
+                                    strReceiveData = ""
+                                } else {
+                                    strReceiveData = ""
+                                }
+                            } else {
+                                strReceiveData = ""
+                            }
+                        }
+                        else {
+                            strReceiveData += message
+                            Log.e("eleutheria", "line msg : " + message)
                         }
                     }
                 }
-
             }
         }
     }
