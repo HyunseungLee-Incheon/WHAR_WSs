@@ -100,7 +100,8 @@ class GyroActivity : AppCompatActivity(), View.OnClickListener {
         val smsManager = SmsManager.getDefault()
 
 //        val message = "Gyro Action Message!! "
-        val message = "비상 상황입니다! 구조가 필요합니다!"
+//        val message = "비상 상황입니다! 구조가 필요합니다!"
+        val message = "Emergency!! I need rescue!! track my location!!"
         val strFirstString = strPhoneNumber.substring(0, 1)
 
         if(strFirstString.equals("0")) {
