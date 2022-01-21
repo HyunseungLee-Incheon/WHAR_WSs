@@ -110,7 +110,8 @@ class PressureActivity : AppCompatActivity(), View.OnClickListener {
 
         val smsManager = SmsManager.getDefault()
 
-        val message = "Emergency Message!! "
+//        val message = "Emergency Message!! "
+        val message = "Emergency!! I need rescue!! track my location!!"
         val strFirstString = strPhoneNumber.substring(0, 1)
 
         if(strFirstString.equals("0")) {
